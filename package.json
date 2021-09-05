@@ -4,7 +4,8 @@
   "description": "A blog post API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/MiheretuTesh/node_api_blog_post/issues"
   },
-  "homepage": "https://github.com/MiheretuTesh/node_api_blog_post#readme"
+  "homepage": "https://github.com/MiheretuTesh/node_api_blog_post#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4",
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node":  "14.16.0"
+
+  }
 }
