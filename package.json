@@ -1,0 +1,19 @@
+{
+  "name": "blog_post",
+  "version": "1.0.0",
+  "description": "A blog post API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiheretuTesh/node_api_blog_post.git"
+  },
+  "author": "Miheretu Teshale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiheretuTesh/node_api_blog_post/issues"
+  },
+  "homepage": "https://github.com/MiheretuTesh/node_api_blog_post#readme"
+}
