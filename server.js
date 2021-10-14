@@ -1,32 +1,47 @@
-const express = require('express');
-const importData = require('./data.json');
+const express = require("express");
+const importData = require("./data.json");
 const app = express();
-const connectDB = require('./db');
-const dotenv = require('dotenv');
-
+const connectDB = require("./db");
+const dotenv = require("dotenv");
+const errorHandler = require("./middleware/error");
 
 dotenv.config();
 
 //connect to database
 connectDB();
 
+//Routes files
 
-let PORT = process.env.PORT || 3000;
+const posts = require("./routes/posts");
 
-app.get("/", (req, res) => {
-    res.send("Hellow World");
+// body pareser
+app.use(express.json());
+
+//Mount routers
+
+app.use("/api/v1/posts", posts);
+
+// Error middleware
+app.use(errorHandler);
+
+// if (process.env.NODE_ENV == "DEVELOPMENT") {
+//     app.use(morgan("dev"));
+//   }
+
+const port = process.env.PORT || 5000;
+
+const server = app.listen(5000, () => {
+  console.log(`sever is running on port ${port}`.yellow.bold);
 });
 
-app.get("/players", (req, res) => {
-    res.send(importData);
-});
+// handel unhandled promise rejections to
 
-const server = app.listen(3000, ()=>{
-    console.log(`server is running on port ${PORT}`);
-})
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Error ${err}`);
+  server.close(() => process.exit(1));
+});
 
 // app.listen(PORT, (req, res) => {console.log(`listening on port ${PORT}`)})
-
 
 // https://git.heroku.com/blogpostnodeapinewapp.git
 

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const color = require("colors");
 
 const connectDB = async () => {
-    console.log("Trying to connext to database")
+    console.log("Trying to connect to database")
   const conn = await mongoose.connect(process.env.DB_URI, {
       
     // useCreateIndex: true,
