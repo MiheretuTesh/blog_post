@@ -7,41 +7,54 @@ const asyncHandler = require("../middleware/asyncHandler");
 //@access public
 
 exports.getPosts = asyncHandler(async (req, res, next) => {
-    res.status(200).json({status: 200, data: "Get all post from api"})
+  const post = await Post.find();
+  res.status(200).json({ success: 200, count: post.length, data: post });
 });
-
 
 //@desc GET all post
 //@route /api/v1/posts/:id
 //@access public
 
 exports.getPost = asyncHandler(async (req, res, next) => {
-    res.status(200).json({status: 200, data: `Get single post from api with id of ${req.params.id}`})
-});
+  const post = await Post.findById(req.params.id);
 
+  if (!post) {
+    return next(
+      new ErrorResponse(`Post with Id ${req.params.id} not found`, 404)
+    );
+  }
+  res.status(200).json({
+    success: true,
+    data: post,
+  });
+});
 
 //@desc POST a post
 //@route /api/v1/posts
 //@access private
 
 exports.createPost = asyncHandler(async (req, res, next) => {
-    res.status(200).json({status: 200, data: `post a new post`})
+  res.status(200).json({ status: 200, data: `post a new post` });
 });
-
 
 //@desc PUT a post
 //@route /api/v1/posts/:id
 //@access private
 
 exports.updatePost = asyncHandler(async (req, res, next) => {
-    res.status(200).json({status: 200, data: `Update a specific post whit and Id of ${req.params.id}`})
+  res.status(200).json({
+    status: 200,
+    data: `Update a specific post whit and Id of ${req.params.id}`,
+  });
 });
-
 
 //@desc DELETE a post
 //@route /api/v1/posts/:id
 //@access public
 
 exports.deletePost = asyncHandler(async (req, res, next) => {
-    res.status(200).json({status: 200, data: `Delete a specific post whit and Id of ${req.params.id}`})
+  res.status(200).json({
+    status: 200,
+    data: `Delete a specific post whit and Id of ${req.params.id}`,
+  });
 });
