@@ -11,7 +11,7 @@ const {
 //models
 const Review = require("../models/Review");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
     .route("/")
@@ -22,4 +22,6 @@ router
     .route("/:id")
     .get(getReview)
     .put(updateReview)
-    .delete(deleteReview)
+    .delete(deleteReview);
+
+module.exports = router;

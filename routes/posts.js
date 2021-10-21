@@ -8,11 +8,19 @@ const {
 } = require("../controllers/posts");
 
 
+//Include other resource routers
+const reviewRouter = require('./reviews');
+
+
 //models
-const Bootcamp = require("../models/Post");
+const Post = require("../models/Post");
+
+
 
 const router = express.Router();
 
+//Re-route into other resource routers
+router.use('/:postId/reviews', reviewRouter)
 router
   .route("/")
   .get(getPosts)

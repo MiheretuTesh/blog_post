@@ -13,6 +13,8 @@ connectDB();
 //Routes files
 
 const posts = require("./routes/posts");
+const review = require("./routes/review");
+
 
 // body pareser
 app.use(express.json());
@@ -20,6 +22,8 @@ app.use(express.json());
 //Mount routers
 
 app.use("/api/v1/posts", posts);
+app.use("/api/v1/review", review);
+
 
 // Error middleware
 app.use(errorHandler);
