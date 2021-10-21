@@ -16,7 +16,7 @@ const router = express.Router({ mergeParams: true });
 router
     .route("/")
     .get(getAllReviews)
-    .post(createPost);
+    .post(createReview);
 
 router
     .route("/:id")

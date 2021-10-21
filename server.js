@@ -13,7 +13,7 @@ connectDB();
 //Routes files
 
 const posts = require("./routes/posts");
-const review = require("./routes/review");
+const reviews = require("./routes/reviews");
 
 
 // body pareser
@@ -22,7 +22,7 @@ app.use(express.json());
 //Mount routers
 
 app.use("/api/v1/posts", posts);
-app.use("/api/v1/review", review);
+app.use("/api/v1/review", reviews);
 
 
 // Error middleware

@@ -7,15 +7,11 @@ const {
   deletePost,
 } = require("../controllers/posts");
 
-
 //Include other resource routers
 const reviewRouter = require('./reviews');
 
-
 //models
 const Post = require("../models/Post");
-
-
 
 const router = express.Router();
 

@@ -7,7 +7,7 @@ const ReviewSchema = new mongoose.Schema({
     maxlength: [100, "comment title cannot be more than 100 charachters"],
   },
   isLiked: {
-    type: boolean,
+    type: Boolean,
     defaudlt: false,
   },
   post_id: {
