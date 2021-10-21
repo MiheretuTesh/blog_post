@@ -10,12 +10,12 @@ const ReviewSchema = new mongoose.Schema({
     type: Boolean,
     defaudlt: false,
   },
-  post_id: {
+  post: {
     type: mongoose.Schema.ObjectId,
     ref: "Post",
     required: true,
   },
-  user_id: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,

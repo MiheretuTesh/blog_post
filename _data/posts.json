@@ -1,20 +1,18 @@
 [
     {
-      "title": "Wenchi",
-      "description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer"
+        "title": "Wenchi",
+        "description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer"
     },
     {
         "title": "Woliso Negash Log",
         "description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer"
-     
     },
     {
         "title": "Debrezeit",
         "description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer"
-     
     },
     {
         "title": "Addis Ababa Intoto park",
         "description": "Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer"
     }
-  ]
+]
