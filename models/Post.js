@@ -18,8 +18,42 @@ const PostSchema = new mongoose.Schema(
     },
     isAllowed: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    avatar: {
+      type: String,
+    },
+    likes: [
+      {
+        // user: {
+        //   type: mongoose.Schema.ObjectId,
+        //   ref: "User",
+        // },
+      },
+    ],
+    comments: [
+      {
+        // user: {
+        //   type: mongoose.Schema.ObjectId,
+        //   ref: "User",
+        // },
+        text: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
+        },
+        // avatar: {
+        //   type: String
+        // },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+
     // user: {
     //   type: mongoose.Schema.ObjectId,
     //   ref: "User",
