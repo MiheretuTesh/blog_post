@@ -3,7 +3,9 @@ const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/asyncHandler");
 
 exports.getAllReviews = asyncHandler(async (req, res, next) => {
-  if(req.params.post_id)
+  if(req.params.postId){
+    const reviews = await Review.find({post})
+  }
   res.status(200).json({ success: true, message: "Get All Reviews" });
 });
 
