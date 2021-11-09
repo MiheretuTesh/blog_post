@@ -1,0 +1,30 @@
+[
+    {
+        "firstName": "Miheretu",
+        "lastName": "Teshale",
+        "email": "miheretutd@gmail.com",
+        "gender": "Male",
+        "dateOfBirth": "1999-09-09"
+    },
+    {
+        "firstName": "Dave",
+        "lastName": "Sol",
+        "email": "dave@gmail.com",
+        "gender": "Male",
+        "dateOfBirth": "2000-09-09"
+    },
+    {
+        "firstName": "Miheretu",
+        "lastName": "Teshale",
+        "email": "miheretutd@gmail.com",
+        "gender": "Male",
+        "dateOfBirth": "1999-09-09"
+    },
+    {
+        "firstName": "Miheretu",
+        "lastName": "Teshale",
+        "email": "miheretutd@gmail.com",
+        "gender": "Male",
+        "dateOfBirth": "1999-09-09"
+    }
+]
