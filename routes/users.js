@@ -3,7 +3,8 @@ const {
     getUsers, 
     getUser, 
     createUser, 
-    updateUser } = require("../controllers/users");
+    updateUser,
+    deleteUser, } = require("../controllers/users");
 
 const User = require("../models/User");
 
@@ -18,7 +19,8 @@ router
 router
     .route("/:id")
     .get(getUser)
-    .put(updateUser);
+    .put(updateUser)
+    .delete(deleteUser);
 
 
 
