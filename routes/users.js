@@ -1,5 +1,9 @@
 const express = require("express");
-const { getUsers, getUser, createUser } = require("../controllers/users");
+const { 
+    getUsers, 
+    getUser, 
+    createUser, 
+    updateUser } = require("../controllers/users");
 
 const User = require("../models/User");
 
@@ -13,7 +17,8 @@ router
 
 router
     .route("/:id")
-    .get(getUser);
+    .get(getUser)
+    .put(updateUser);
 
 
 
