@@ -25,18 +25,18 @@ const PostSchema = new mongoose.Schema(
     },
     likes: [
       {
-        // user: {
-        //   type: mongoose.Schema.ObjectId,
-        //   ref: "User",
-        // },
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
       },
     ],
     comments: [
       {
-        // user: {
-        //   type: mongoose.Schema.ObjectId,
-        //   ref: "User",
-        // },
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
         text: {
           type: String,
           required: true,
@@ -44,9 +44,9 @@ const PostSchema = new mongoose.Schema(
         name: {
           type: String,
         },
-        // avatar: {
-        //   type: String
-        // },
+        avatar: {
+          type: String
+        },
         date: {
           type: Date,
           default: Date.now,
@@ -54,11 +54,11 @@ const PostSchema = new mongoose.Schema(
       },
     ],
 
-    // user: {
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
