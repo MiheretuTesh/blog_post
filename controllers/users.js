@@ -28,3 +28,32 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     data: user,
   });
 });
+
+//@desc Create user
+//@route /api/v1/users/
+//@access private/Admin
+
+exports.createUser = asyncHandler(async (req, res, next) => {
+  const user = await User.create(req.body);
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+//@desc Update user
+//@route /api/v1/users/:id
+//@access public
+
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
