@@ -15,17 +15,12 @@ const Post = require("../models/Post");
 
 const router = express.Router();
 
+const { protect, authorize } = require("../middleware/auth");
+
 //Re-route into other resource routers
 // router.use('/:postId/reviews', reviewRouter)
-router
-  .route("/")
-  .get(getPosts)
-  .post(createPost);
+router.route("/").get(getPosts).post(protect, createPost);
 
-router
-  .route("/:id")
-  .get(getPost)
-  .put(updatePost)
-  .delete(deletePost);
+router.route("/:id").get(getPost).put(updatePost).delete(deletePost);
 
 module.exports = router;

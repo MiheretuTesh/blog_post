@@ -34,6 +34,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 //@access private
 
 exports.createPost = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id
   const post = await Post.create(req.body);
   res.status(201).json({ success: true, data: post });
 });
