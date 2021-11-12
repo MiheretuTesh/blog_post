@@ -15,6 +15,7 @@ connectDB();
 const posts = require("./routes/posts");
 const reviews = require("./routes/reviews");
 const users = require("./routes/users");
+const auth = require("./routes/auth");
 
 // body pareser
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use("/api/v1/posts", posts);
 app.use("/api/v1/review", reviews);
 app.use("/api/v1/users", users);
+app.use("/api/v1/auth", auth);
 
 // Error middleware
 app.use(errorHandler);
