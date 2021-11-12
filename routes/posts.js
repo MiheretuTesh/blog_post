@@ -21,6 +21,10 @@ const { protect, authorize } = require("../middleware/auth");
 // router.use('/:postId/reviews', reviewRouter)
 router.route("/").get(getPosts).post(protect, createPost);
 
-router.route("/:id").get(getPost).put(updatePost).delete(deletePost);
+router
+  .route("/:id")
+  .get(getPost)
+  .put(protect, updatePost)
+  .delete(protect, authorize("admin"), deletePost);
 
 module.exports = router;
