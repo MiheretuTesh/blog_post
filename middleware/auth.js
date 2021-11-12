@@ -11,7 +11,13 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.header.authorization &&
     req.header.authorization.startWith("Bearer")
   ) {
-    token = req.header.authorization.split(" ")[1];
+    token = req.header.authorization.split(' ')[1];
+    console.log(token);
+    console.log("I was here");
+
+    console.log("I was here");
+    console.log("I was here");
+    console.log("I was here");
   }
 
   if (!token) {
@@ -20,6 +26,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded)
 
     req.user = await User.findOne(decoded.id);
   } catch (err) {
