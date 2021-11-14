@@ -95,7 +95,6 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 // @desc like post
 //@access private
 exports.likePost = asyncHandler(async (req, res, next) => {
-  console.log("I am Here");
   // const user = await User.findOne({ user: req.user.id });
   const post = await Post.findById(req.params.id);
   if (!post) {
@@ -106,13 +105,40 @@ exports.likePost = asyncHandler(async (req, res, next) => {
   if (
     post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
   ) {
-    console.log("I am Here");
-
     return res
       .status(400)
       .json({ alreadyLiked: "User already like this post" });
   }
   post.likes.unshift({ user: req.user.id });
+  post.save();
+  return res.status(200).json({ post });
+});
+
+//Add commnet to a post
+//@desc POST api/posts/comment/:id
+//@desc commenting for a post
+//@access Private
+exports.commentPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Post with ID of ${req.params.id} not found`, 404)
+    );
+  }
+  // if (
+  //   post.comments.filter((comment) => comment.user.toString() === req.user.id)
+  //     .length > 0
+  // ) {
+  //   return res
+  //     .status(400)
+  //     .json({ alreadyLiked: "User already like this post" });
+  // }
+  const newComment = {
+    text: req.body.text,
+    name: `${req.user.firstName} ${req.user.lastName}`,
+    user: req.user.id,
+  };
+  post.comments.unshift(newComment);
   post.save();
   return res.status(200).json({ post });
 });
