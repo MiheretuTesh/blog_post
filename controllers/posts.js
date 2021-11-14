@@ -2,6 +2,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/asyncHandler");
+const ValidatePostInput = require("../middleware/validations/post");
 
 //@desc GET all posts
 //@route /api/v1/posts
@@ -35,6 +36,10 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 //@access private
 
 exports.createPost = asyncHandler(async (req, res, next) => {
+  const { errors, isValid } = ValidatePostInput(req.body);
+  if (!isValid) {
+    res.status(404).json({ errors });
+  }
   req.body.user = req.user.id;
   const post = await Post.create(req.body);
   res.status(201).json({ success: true, data: post });
@@ -54,6 +59,11 @@ exports.updatePost = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`Post With Id ${req.params.id} not found`, 404)
     );
+  }
+
+  const { errors, isValid } = ValidatePostInput(req.body);
+  if (!isValid) {
+    res.status(404).json({ errors });
   }
 
   res.status(200).json({
@@ -92,7 +102,9 @@ exports.likePost = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Post with ID of ${req.params.id} not found`, 404)
     );
   }
-  if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
-    return res.status(400).json({})
+  if (
+    post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
+  ) {
+    return res.status(400).json({});
   }
 });
