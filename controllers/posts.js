@@ -127,8 +127,8 @@ exports.unlikePost = asyncHandler(async (req, res, next) => {
   }
 
   if (
-    post.likes.filter((like) => like.user.toString() === req.user.id)
-      .length === 0
+    post.likes.filter((like) => like.user.toString() === req.user.id).length ===
+    0
   ) {
     return res
       .status(400)
@@ -143,7 +143,7 @@ exports.unlikePost = asyncHandler(async (req, res, next) => {
 
   post.save();
 
-  return res.status(200).json({post});
+  return res.status(200).json({ post });
 });
 
 //Add commnet to a post
@@ -158,17 +158,9 @@ exports.commentPost = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const { errors, isValid } = ValidatePostInput(req.body);
-  if (!isValid) {
-    return res.status(404).json({ errors });
-  }
-  // if (
-  //   post.comments.filter((comment) => comment.user.toString() === req.user.id)
-  //     .length > 0
-  // ) {
-  //   return res
-  //     .status(400)
-  //     .json({ alreadyLiked: "User already like this post" });
+  // const { errors, isValid } = ValidatePostInput(req.body);
+  // if (!isValid) {
+  //   return res.status(404).json({ errors });
   // }
   const newComment = {
     text: req.body.text,
@@ -177,5 +169,35 @@ exports.commentPost = asyncHandler(async (req, res, next) => {
   };
   post.comments.unshift(newComment);
   post.save();
+  return res.status(200).json({ post });
+});
+
+// Delete comments
+// @desc POST api/posts/comment/:id/:comment_id
+// @desc uncommenting from a post
+// @access private
+exports.uncommentPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(new ErrorResponse(`Post with this Id is not found`));
+  }
+
+  //checking if the comment exists
+  if (
+    post.comments.filter(
+      (comment) => comment._id.toString() === req.params.comment_id
+    ).length === 0
+  ) {
+    return res.status(404).json({ commentNotExist: "Comment does not exist" });
+  }
+
+  const commentToRemove = post.comments
+    .map((comment) => comment._id.toString())
+    .indexOf(req.params.comment_id);
+
+  post.comments.splice(commentToRemove, 1);
+
+  post.save();
+
   return res.status(200).json({ post });
 });
