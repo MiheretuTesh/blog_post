@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/asyncHandler");
 
@@ -34,7 +35,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 //@access private
 
 exports.createPost = asyncHandler(async (req, res, next) => {
-  req.body.user = req.user.id
+  req.body.user = req.user.id;
   const post = await Post.create(req.body);
   res.status(201).json({ success: true, data: post });
 });
@@ -77,4 +78,21 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
     success: true,
     data: {},
   });
+});
+
+//Add like
+//@desc POST api/posts/like/:id
+// @desc like post
+//@access private
+exports.likePost = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ user: req.user.id });
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Post with ID of ${req.params.id} not found`, 404)
+    );
+  }
+  if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
+    return res.status(400).json({})
+  }
 });
