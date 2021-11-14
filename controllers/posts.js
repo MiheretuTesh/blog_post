@@ -95,7 +95,8 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 // @desc like post
 //@access private
 exports.likePost = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({ user: req.user.id });
+  console.log("I am Here");
+  // const user = await User.findOne({ user: req.user.id });
   const post = await Post.findById(req.params.id);
   if (!post) {
     return next(
@@ -105,6 +106,13 @@ exports.likePost = asyncHandler(async (req, res, next) => {
   if (
     post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
   ) {
-    return res.status(400).json({});
+    console.log("I am Here");
+
+    return res
+      .status(400)
+      .json({ alreadyLiked: "User already like this post" });
   }
+  post.likes.unshift({ user: req.user.id });
+  post.save();
+  return res.status(200).json({ post });
 });
