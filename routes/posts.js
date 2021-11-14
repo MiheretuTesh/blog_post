@@ -7,6 +7,7 @@ const {
   deletePost,
   likePost,
   commentPost,
+  unlikePost
 } = require("../controllers/posts");
 
 //Include other resource routers
@@ -33,8 +34,15 @@ router
   .route("/like/:id")
   .post(protect, likePost);
   
+
 router
+  .route("/unlike/:id")
+  .post(protect, unlikePost);
+
+  router
   .route("/comment/:id")
   .post(protect, commentPost);
+
+
 
 module.exports = router;

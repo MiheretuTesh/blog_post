@@ -114,6 +114,38 @@ exports.likePost = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ post });
 });
 
+//Add unlikes to a like posts
+// @desc POST api/posts/unlike/:id
+// @desc unlike a post
+// @access Private
+exports.unlikePost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Post with ID of ${req.params.id} not found`, 404)
+    );
+  }
+
+  if (
+    post.likes.filter((like) => like.user.toString() === req.user.id)
+      .length === 0
+  ) {
+    return res
+      .status(400)
+      .json({ notLiked: "You have not yet liked this post" });
+  }
+
+  const likeToRemove = post.likes
+    .map((item) => item.user.toString())
+    .indexOf(req.user.id);
+
+  post.likes.splice(likeToRemove, 1);
+
+  post.save();
+
+  return res.status(200).json({post});
+});
+
 //Add commnet to a post
 //@desc POST api/posts/comment/:id
 //@desc commenting for a post
@@ -124,6 +156,11 @@ exports.commentPost = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`Post with ID of ${req.params.id} not found`, 404)
     );
+  }
+
+  const { errors, isValid } = ValidatePostInput(req.body);
+  if (!isValid) {
+    return res.status(404).json({ errors });
   }
   // if (
   //   post.comments.filter((comment) => comment.user.toString() === req.user.id)
