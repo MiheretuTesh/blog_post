@@ -43,12 +43,28 @@ const PostSchema = new mongoose.Schema(
           type: String,
         },
         avatar: {
-          type: String
+          type: String,
         },
         date: {
           type: Date,
           default: Date.now,
         },
+        replys: [
+          {
+            user: {
+              type: mongoose.Schema.ObjectId,
+              ref: "User",
+            },
+            text: {
+              type: String,
+              required: true,
+            },
+            date: {
+              type: Date,
+              default: Date.now,
+            },
+          },
+        ],
       },
     ],
 
