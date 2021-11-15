@@ -201,3 +201,34 @@ exports.uncommentPost = asyncHandler(async (req, res, next) => {
 
   return res.status(200).json({ post });
 });
+
+// REply to a comment
+// @desc POST api/posts/comment/:id/:comment_id/reply
+// @desc rep;y to a comment
+// @access Private
+exports.replyToComment = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(
+      new ErrorResponse(`Post with ID of ${req.params.id} does not exists`)
+    );
+  }
+  if (
+    post.comments.filter(
+      (comment) => comment._id.toString() === req.params.comment_id
+    ).length === 0
+  ) {
+    return res.status(404).json(commentNotExist: "Comment does not exist")
+  }
+
+  const newReply = {
+    text: req.body.text,
+    name: `${req.user.firstName} ${req.user.lastName}`,
+    user: req.user.id
+  }
+  post.comments.replys.unshift(newReply);
+  
+  post.save();
+  
+  return res.status(200).json({post});
+});
