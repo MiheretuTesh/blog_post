@@ -100,3 +100,16 @@ exports.getMe = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user });
 });
 
+//@desc Get logout current user
+// @route GET /api/v1/auth/logout
+// @access private
+// exports.logoutUser = asyncHandler(async (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   jsonwebtoken.sign(authHeader, "", (logout, err) => {
+//     if (logout) {
+//       res.send({ msg: "You have been Logged Out" });
+//     } else {
+//       res.send({ msg: "Error" });
+//     }
+//   });
+// });
