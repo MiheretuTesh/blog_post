@@ -1,6 +1,23 @@
 const User = require("../models/User");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/asyncHandler");
+const path = require("path");
+const multer = require("multer");
+
+// @image import
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../../public/images/users"));
+  },
+  filename: (req, file, cb) => {
+    cb(null, `book-${Date.now()}-profile${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({
+  storage,
+});
+exports.uploadProfile = upload.single("image");
 
 //@desc GET all User
 //@route /api/v1/users
@@ -70,4 +87,3 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     data: [],
   });
 });
-

@@ -31,9 +31,9 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "publisher", "admin"],
     default: "user",
   },
-  image: {
+  img: {
     type: String,
-    // default: "default.png",
+    default: "default.png",
   },
   gender: {
     type: String,
