@@ -6,18 +6,19 @@ const multer = require("multer");
 
 // @image import
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../../public/images/users"));
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../public/images/users"));
   },
-  filename: (req, file, cb) => {
-    cb(null, `book-${Date.now()}-profile${path.extname(file.originalname)}`);
+  filename: function (req, file, cb) {
+    cb(null, `user-${Date.now()}-profile${path.extname(file.originalname)}`);
   },
 });
 
 const upload = multer({
   storage,
 });
-exports.uploadProfile = upload.single("image");
+
+exports.uploadProfile = upload.single("img");
 
 //@desc GET all User
 //@route /api/v1/users
@@ -51,7 +52,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 //@access private/Admin
 
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const user = await User.create(req.body);
+  const user = await User.create({
+    ...req.body,
+    img: req.file.filename,
+  });
 
   res.status(200).json({
     success: true,

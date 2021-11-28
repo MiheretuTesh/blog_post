@@ -22,7 +22,7 @@ router
 router
   .route("/:id")
   .get(protect, getUser)
-  .put(protect, authorize("admin", "user"), updateUser)
+  .put(protect, authorize("admin", "user"), uploadProfile, updateUser)
   .delete(protect, authorize("admin"), deleteUser);
 
 module.exports = router;
