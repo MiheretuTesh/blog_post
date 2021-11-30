@@ -3,6 +3,32 @@ const User = require("../models/User");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/asyncHandler");
 const ValidatePostInput = require("../middleware/validations/post");
+const multer = require("multer");
+const path = require("path");
+
+// @des post images upload
+// @route /api/v1/post
+// @access Private
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "../public/images/posts");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      `user-${Date.now()}-post-${file.fieldname}${path.extname(
+        file.originalname
+      )}`
+    );
+  },
+});
+
+const upload = multer({
+  storage,
+});
+
+exports.uploadPostImages = upload.single("img");
 
 //@desc GET all posts
 //@route /api/v1/posts
@@ -41,6 +67,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
     res.status(404).json({ errors });
   }
   req.body.user = req.user.id;
+  req.body.avatar = req.user.img;
   const post = await Post.create(req.body);
   res.status(201).json({ success: true, data: post });
 });

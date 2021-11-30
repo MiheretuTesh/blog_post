@@ -12,16 +12,8 @@ const User = require("../models/User");
 
 exports.register = asyncHandler(async (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    image,
-    gender,
-    birthDate,
-    role,
-  } = req.body;
+  const { firstName, lastName, email, password, gender, birthDate, role } =
+    req.body;
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -32,10 +24,10 @@ exports.register = asyncHandler(async (req, res, next) => {
     lastName,
     email,
     password,
-    image,
     gender,
     birthDate,
     role,
+    img: req.file.filename,
   });
 
   sendTokenResponse(user, 200, res);

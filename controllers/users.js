@@ -49,9 +49,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 //@desc Create user
 //@route /api/v1/users/
-//@access private/Admin
+//@access public
 
 exports.createUser = asyncHandler(async (req, res, next) => {
+  console.log(req.file, req.body)
   const user = await User.create({
     ...req.body,
     img: req.file.filename,
@@ -71,6 +72,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
+    img: req.file.filename,
   });
 
   res.status(200).json({
