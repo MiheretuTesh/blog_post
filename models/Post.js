@@ -70,6 +70,10 @@ const PostSchema = new mongoose.Schema(
         ],
       },
     ],
+    images: {
+      type: String,
+      default: "default.png",
+    },
 
     user: {
       type: mongoose.Schema.ObjectId,

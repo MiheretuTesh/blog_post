@@ -66,6 +66,13 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   if (!isValid) {
     res.status(404).json({ errors });
   }
+
+  const filenames = req.files.map((file) => {
+    console.log(file.filename);
+    return file.filename;
+  });
+  console.log(filenames);
+
   req.body.user = req.user.id;
   req.body.avatar = req.user.img;
   const post = await Post.create(req.body);

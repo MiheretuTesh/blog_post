@@ -52,7 +52,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 //@access public
 
 exports.createUser = asyncHandler(async (req, res, next) => {
-  console.log(req.file, req.body)
+  console.log(req.file, req.body);
   const user = await User.create({
     ...req.body,
     img: req.file.filename,
