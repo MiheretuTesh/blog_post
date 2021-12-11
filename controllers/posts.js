@@ -31,7 +31,10 @@ exports.uploadPostImages = upload.single("image");
 //@access public
 
 exports.getPosts = asyncHandler(async (req, res, next) => {
-  const post = await Post.find();
+  const post = await Post.find().populate({
+    path: "user",
+    select: "firstName lastName gendet dateOfBirth",
+  });
   res.status(200).json({ success: 200, count: post.length, data: post });
 });
 
@@ -40,7 +43,10 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 //@access public
 
 exports.getPost = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findById(req.params.id).populate({
+    path: "user",
+    select: "firstName lastName gendet dateOfBirth",
+  });
 
   if (!post) {
     return next(
@@ -62,7 +68,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   if (!isValid) {
     res.status(404).json({ errors });
   }
-  console.log(req.file.filename)
+  console.log(req.file.filename);
 
   req.body.user = req.user.id;
   req.body.avatar = req.user.img;
