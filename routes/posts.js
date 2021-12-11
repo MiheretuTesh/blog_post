@@ -24,12 +24,15 @@ const { protect, authorize } = require("../middleware/auth");
 
 //Re-route into other resource routers
 // router.use('/:postId/reviews', reviewRouter)
-router.route("/").get(getPosts).post(protect, createPost);
+router
+  .route("/")
+  .get(getPosts)
+  .post(protect, uploadPostImages,createPost);
 
 router
   .route("/:id")
   .get(getPost)
-  .put(protect, updatePost)
+  .put(protect, uploadPostImages, updatePost)
   .delete(protect, authorize("admin"), deletePost);
 
 router

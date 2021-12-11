@@ -10,17 +10,13 @@ const path = require("path");
 // @route /api/v1/post
 // @access Private
 
+// @image import
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "../public/images/posts");
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../public/images/posts"));
   },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      `user-${Date.now()}-post-${file.fieldname}${path.extname(
-        file.originalname
-      )}`
-    );
+  filename: function (req, file, cb) {
+    cb(null, `user-${Date.now()}-posts${path.extname(file.originalname)}`);
   },
 });
 
@@ -28,7 +24,7 @@ const upload = multer({
   storage,
 });
 
-exports.uploadPostImages = upload.single("img");
+exports.uploadPostImages = upload.single("image");
 
 //@desc GET all posts
 //@route /api/v1/posts
@@ -66,16 +62,11 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   if (!isValid) {
     res.status(404).json({ errors });
   }
-
-  const filenames = req.files.map((file) => {
-    console.log(file.filename);
-    return file.filename;
-  });
-  console.log(filenames);
+  console.log(req.file.filename)
 
   req.body.user = req.user.id;
   req.body.avatar = req.user.img;
-  const post = await Post.create(req.body);
+  const post = await Post.create({ ...req.body, images: req.file.filename });
   res.status(201).json({ success: true, data: post });
 });
 
