@@ -9,6 +9,7 @@ const {
   commentPost,
   unlikePost,
   uncommentPost,
+  replyToComment,
   uploadPostImages
 } = require("../controllers/posts");
 
@@ -54,5 +55,9 @@ router
 router
   .route("/comment/:id/:comment_id")
   .post(protect, uncommentPost);
+
+router
+  .route("/comment/:id/:comment_id/reply")
+  .post(protect, replyToComment);
 
 module.exports = router;

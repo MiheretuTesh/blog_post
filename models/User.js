@@ -56,15 +56,15 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
 
 //Sign JWT and return Token
 UserSchema.methods.getSignedToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET,{
-    expiresIn: process.env.JWT_EXPIRE
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
 //check if the passwords matches
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
-}
+};
 
 const User = mongoose.model("User", UserSchema);
 

@@ -252,12 +252,20 @@ exports.replyToComment = asyncHandler(async (req, res, next) => {
     return res.status(404).json({ commentNotExist: "Comment does not exist" });
   }
 
+  // var count = 0;
   const newReply = {
     text: req.body.text,
     name: `${req.user.firstName} ${req.user.lastName}`,
     user: req.user.id,
   };
-  post.comments.replys.unshift(newReply);
+
+  post.comments.filter((comment) =>
+    comment._id.toString() === req.params.comment_id
+      ? comment.reply.unshift(newReply)
+      : null
+  );
+
+  console.log(newReply);
 
   post.save();
 
